@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import { ToastContainer } from 'react-toastify';
-import * as Sentry from '@sentry/browser';
 import http from './services/httpService';
 import config from './config.json';
 import 'react-toastify/dist/ReactToastify.css'
 import "./App.css";
-
-Sentry.init({
-  dsn: "https://324ffedf829a4ec4b6d263d5f4fe7b55@sentry.io/1372975"
-  });
 
 class App extends Component {
   state = {
@@ -45,7 +40,7 @@ class App extends Component {
     this.setState({ posts });
     
     try {
-      await http.delete('s'+config.apiEndpoint + '/' + post.id);    
+      await http.delete(config.apiEndpoint + '/' + post.id);    
     } catch (ex) {
       if(ex.response && (ex.response.status === 404)) alert('This post has already been deleted.');
       this.setState({ posts: originalPosts });
